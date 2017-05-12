@@ -1,0 +1,47 @@
+{
+  "name": "artoo-js",
+  "version": "0.3.3",
+  "description": "The client-side scraping companion.",
+  "main": "./build/artoo.node.js",
+  "author": {
+    "name": "Yomguithereal",
+    "url": "https://github.com/Yomguithereal"
+  },
+  "scripts": {
+    "start": "gulp work",
+    "https": "gulp https",
+    "test": "gulp test",
+    "prepublish": "gulp build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/medialab/artoo"
+  },
+  "keywords": [
+    "datamining",
+    "scraping",
+    "webscraper"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/medialab/artoo/issues"
+  },
+  "homepage": "https://github.com/medialab/artoo",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-artoo": "~0.1.0",
+    "gulp-concat": "^2.5.2",
+    "gulp-header": "^1.7.1",
+    "gulp-jshint": "^1.11.2",
+    "gulp-mocha": "^2.0.0",
+    "gulp-mocha-phantomjs": "^0.10.1",
+    "gulp-rename": "~1.2.0",
+    "gulp-replace": "~0.5.0",
+    "gulp-uglify": "^1.1.0",
+    "gulp-webserver": "^0.9.0",
+    "run-sequence": "^1.0.2"
+  },
+  "dependencies": {
+    "cheerio": "^0.19.0"
+  }
+}
