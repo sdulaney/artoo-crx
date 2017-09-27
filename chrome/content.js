@@ -43,52 +43,45 @@ chrome.runtime.onMessage.addListener(
         console.log("Browser action clicked");
         // Run Artoo script on BrowserAction click https://github.com/medialab/artoo/issues/240
         // artoo-r2r.js
-                var scraper = {
-                  iterator: '.regular-search-result',
-                  data: {
-                    title: {sel: '.biz-name span'},
-                    phone: {
-                        sel: '.biz-phone'
-                    },
-                    link: {
-                        sel: '.biz-name',
-                        attr: 'href'
-                    },
-                    address: {
-                        sel: 'address',
-                        method: 'text'
-                    },
-                    neighborhood: {
-                        sel: '.neighborhood-str-list',
-                    }
+        var scraper = {
+          iterator: '#s-results-list-atf > li',
+          data: {
+              "ASIN": {
+
+                  method: function($) {
+                      return $(this).attr('data-asin');
                   }
-                };
+              }
+          }
+        };
 
-                function nextUrl($page) {
-                  return $page.find('.next.pagination-links_anchor').attr('href');
-                }
+        function nextUrl($page) {
+          return $page.find('#pagnNextLink').attr('href');
+        }
 
-                artoo.log.debug('Starting the scraper...');
-                var frontpage = artoo.scrape(scraper);
+        artoo.log.debug('Starting the scraper...');
+        var frontpage = artoo.scrape(scraper);
 
-                artoo.ajaxSpider(
-                  function(i, $data) {
-                    return nextUrl(!i ? artoo.$(document) : $data);
-                  },
-                  {
-                    limit: 1000,
-                    throttle: 5000,
-                    scrape: scraper,
-                    concat: true,
-                    done: function(data) {
-                      artoo.log.debug('Finished retrieving data. Downloading...');
-                      artoo.saveCsv(
-                        frontpage.concat(data),
-                        {filename: 'yelp.csv'}
-                      );
-                    }
-                  }
-                );
+        artoo.ajaxSpider(
+          function(i, $data) {
+            return nextUrl(!i ? artoo.$(document) : $data);
+          },
+          {
+            limit: 1,
+            throttle: 2500,
+            scrape: scraper,
+            concat: true,
+            done: function(data) {
+              artoo.log.debug('Finished retrieving data. Downloading...');
+              artoo.saveCsv(
+                frontpage.concat(data),
+                {filename: 'asin.csv'}
+              );
+            }
+          }
+        );
+
+
 
 
       }
